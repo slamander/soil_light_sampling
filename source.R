@@ -1,5 +1,7 @@
 sampling <- function(type = "soil"){
   
+  library(tidyverse)
+  
   sampling <- data.frame(
   plot = seq(1,120,by=1),
   block = factor(rep(1:10, each=12)),
@@ -19,12 +21,12 @@ sampling <- function(type = "soil"){
   #####################################################################
   ####################### sampling for light ##########################
   #####################################################################
-  if(type == "soil"){
+  if(type == "light"){
     light_sampling <- list()
     
     for(i in 1:length(sampling_list)){
       block <- sample(sampling_list[[i]])
-      light_sampling[[i]] <- data.frame(
+      light_sampling[[paste("Block: ", i)]] <- data.frame(
         dist_plot = sample(block$plot[block$dist ==1], size=1),
         undist_plot = sample(block$plot[block$dist ==0], size=1)
       )
@@ -35,12 +37,12 @@ sampling <- function(type = "soil"){
   #####################################################################
   ####################### sampling for soil ###########################
   #####################################################################
-  if(type == "light"){
+  if(type == "soil"){
     soil_sampling <- list()
     
     for(i in 1:length(sampling_list)){
       block <- sample(sampling_list[[i]])
-      soil_sampling[[i]] <- data.frame(
+      soil_sampling[[paste("Block: ", i)]] <- data.frame(
         dist_plot = sample(block$plot[block$dist ==1], size=3, replace=F),
         undist_plot = sample(block$plot[block$dist ==0], size=3, replace=F)
         )
